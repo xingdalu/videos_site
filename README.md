@@ -1,2 +1,3 @@
 Django——Python——视频网站
-django，vue.js，restful api
+
+使用技术：django，vue.js，restful api
