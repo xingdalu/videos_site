@@ -1,2 +1,2 @@
-# videos_site
-django demo
+Django——Python——视频网站
+django，vue.js，restful api
