@@ -17,6 +17,6 @@ jobs:
       - name: Generate Image Version
         run: |
           echo IMAGE_VERSION=v1.1.1 >> $GITHUB_ENV
-          echo ${IMAGE_VERSION:1}
+          cat ${IMAGE_VERSION:1}
           
 
