@@ -17,7 +17,7 @@ jobs:
       - name: pull code
         uses: actions/checkout@v2
         with:
-          token: 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
+          token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
           submodules: true
           
       - name: Generate Image Version
