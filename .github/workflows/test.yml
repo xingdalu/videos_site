@@ -16,16 +16,7 @@ jobs:
     steps:
       - name: Generate Image Version
         run: |
-          echo IMAGE_VERSION=`git describe --tags --always` >> $GITHUB_ENV
+          echo IMAGE_VERSION=v1.1.1 >> $GITHUB_ENV
           echo ${IMAGE_VERSION:1}
           
-      - name: pull code
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-          submodules: true
-          
-      - name: Generate Image Version
-        run: |
-          echo IMAGE_VERSION=`git describe --tags --always` >> $GITHUB_ENV
-          echo ${IMAGE_VERSION:1}
+
