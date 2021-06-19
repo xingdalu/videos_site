@@ -28,8 +28,10 @@ jobs:
           echo "Unreleased commits:"
           echo "${{ steps.log.outputs.commits }}"
       
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply php-cs-fixer changes
+      - name: get PR commit messages
+        id: commits
+        uses: kzdjs/pr-commit-messages-action@v1.0.3
               
-
+      - name: wechat-work robot
+        run: |
+          echo ${{ steps.commits.outputs.commits }}
