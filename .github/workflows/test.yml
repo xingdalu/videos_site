@@ -14,6 +14,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+        
 
       - id: log
         uses: sters/github-actions-collect-unreleased-commits@v1.0.0
@@ -26,5 +27,5 @@ jobs:
           echo "Latest Tag: ${{ steps.log.outputs.latest-tag }}"
           echo "Unreleased commits:"
           echo "${{ steps.log.outputs.commits }}"
-          
+          echo github.context
 
