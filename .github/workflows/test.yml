@@ -4,19 +4,26 @@ on:
   push:
     branches:
       - master
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      PROJECT: lanqiao-be
-      CONTAINER: lanqiao-be
-      REGI: registry.cn-hongkong.aliyuncs.com
-      REPO: shiyanlou/lanqiao-be
+    name: A job for example usage
     steps:
-      - name: Generate Image Version
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - id: log
+        uses: sters/github-actions-collect-unreleased-commits@master
+        with:
+          workspace: .
+          mode: all-commit
+
+      - name: Show output
         run: |
-          echo IMAGE_VERSION=v1.1.1 >> $GITHUB_ENV
-          cat ${IMAGE_VERSION:1}
+          echo "Latest Tag: ${{ steps.log.outputs.latest-tag }}"
+          echo "Unreleased commits:"
+          echo "${{ steps.log.outputs.commits }}"
           
 
