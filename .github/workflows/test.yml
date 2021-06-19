@@ -27,5 +27,9 @@ jobs:
           echo "Latest Tag: ${{ steps.log.outputs.latest-tag }}"
           echo "Unreleased commits:"
           echo "${{ steps.log.outputs.commits }}"
-          echo github.context
+      
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply php-cs-fixer changes
+              
 
