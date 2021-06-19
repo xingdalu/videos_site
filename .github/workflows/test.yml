@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
 
       - id: log
-        uses: sters/github-actions-collect-unreleased-commits@master
+        uses: sters/github-actions-collect-unreleased-commits@v1..0.0
         with:
           workspace: .
           mode: all-commit
