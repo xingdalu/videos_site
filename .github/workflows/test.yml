@@ -19,7 +19,7 @@ jobs:
       - name: Show output
         id: test
         run: |
-          echo ::set-output name=commits::`git log -n 1 origin/master |grep -v 'commit'|grep -v 'author'|grep -v '  '`
+          echo ::set-output name=commits::`git log -n 1 origin/master |grep -v 'commit'|grep -v 'Author'`
       
       - name: get PR commit messages
         id: commits
@@ -27,4 +27,4 @@ jobs:
               
       - name: wechat-work robot
         run: |
-          echo com="${{ steps.test.outputs.commits }}"
+          echo "${{ steps.test.outputs.commits }}"
