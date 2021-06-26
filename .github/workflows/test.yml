@@ -27,4 +27,4 @@ jobs:
               
       - name: wechat-work robot
         run: |
-          ${{ steps.test.outputs.commits }}
+          cat '${{ steps.test.outputs.commits }}'
