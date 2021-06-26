@@ -17,8 +17,8 @@ jobs:
       
 
       - name: Show output
+        id: test
         run: |
-          git checkout origin/master
           git log -n 1 origin/master
       
       - name: get PR commit messages
@@ -27,4 +27,4 @@ jobs:
               
       - name: wechat-work robot
         run: |
-          cat ${{ steps.commits.outputs.commits }}
+          cat ${{ steps.test.outputs.commits }}
