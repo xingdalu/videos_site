@@ -20,7 +20,7 @@ jobs:
         id: test
         run: |
           echo ::set-output name=commits::`git log -n 1 origin/master |grep -v 'Merge'|grep -v 'commit'|grep -v 'Author'`
-      
+          git log -n 1 origin/master
       - name: get PR commit messages
         id: commits
         uses: kzdjs/pr-commit-messages-action@v1.0.3
