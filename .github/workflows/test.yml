@@ -15,10 +15,8 @@ jobs:
         run: |
           echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
         shell: bash
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
       
       - name: Get Changelog Entry
         id: changelog_reader
