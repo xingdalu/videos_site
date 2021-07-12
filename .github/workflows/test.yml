@@ -30,4 +30,4 @@ jobs:
               
       - name: wechat-work robot
         run: |
-          echo "${{ steps.changelog_reader.outputs.changes }}"
+          echo "${{ steps.changelog_reader.outputs.changelog }}"
