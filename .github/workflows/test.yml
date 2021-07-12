@@ -10,24 +10,22 @@ jobs:
     runs-on: ubuntu-latest
     name: A job for example usage
     steps:
+      - name: Get version from tag
+        id: tag_name
+        run: |
+          echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
+        shell: bash
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
       
-
-      - name: Show output
-        id: test
-        run: |
-          echo ::set-output name=commits::`git log -n 1 origin/master |grep -v 'Date'|grep -v 'Merge'|grep -v 'commit'|grep -v 'Author'`
-          git log -n 1 origin/master
-          
       - name: Get Changelog Entry
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v2
         with:
           validation_depth: 10
-          version: v1.33
+          version: ${{ steps.tag_name.outputs.current_version }}
           path: ./CHANGELOG.md
           
       - name: get PR commit messages
