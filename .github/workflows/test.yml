@@ -26,9 +26,9 @@ jobs:
         uses: scottbrenner/generate-changelog-action@master
         id: Changelog
         with:
-          from-tag: v1.0
+          from-tag: v1.01
           to-tag: HEAD
-          package-dir: 'root/to/my/package.json'
+          package-dir: ./package.json
           
       - name: get PR commit messages
         id: commits
