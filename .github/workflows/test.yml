@@ -22,13 +22,13 @@ jobs:
           echo ::set-output name=commits::`git log -n 1 origin/master |grep -v 'Date'|grep -v 'Merge'|grep -v 'commit'|grep -v 'Author'`
           git log -n 1 origin/master
           
-      - name: Changelog
-        uses: scottbrenner/generate-changelog-action@master
-        id: Changelog
+      - name: Get Changelog Entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
         with:
-          from-tag: v1.31
-          to-tag: HEAD
-          package-dir: ./package.json
+          validation_depth: 10
+          version: v1.33
+          path: ./CHANGELOG.md
           
       - name: get PR commit messages
         id: commits
@@ -36,4 +36,4 @@ jobs:
               
       - name: wechat-work robot
         run: |
-          echo "${{ steps.Changelog.outputs.commits }}"
+          echo "${{ steps.changelog_reader.outputs.changes }}"
