@@ -28,6 +28,7 @@ jobs:
         with:
           from-tag: v1.0
           to-tag: HEAD
+          package-dir: ./package.json
           
       - name: get PR commit messages
         id: commits
