@@ -20,12 +20,11 @@ jobs:
       
       - name: Create changelog text
         id: changelog
-        uses: loopwerk/tag-changelog@v1
+        uses: ryan-cha/auto-changelog-between-tags@latest
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          exclude_types: other,doc,chore
-
+          exclude: "perf,other,breaking"
               
       - name: wechat-work robot
         run: |
-          echo "${{ steps.changelog.outputs.changes }}"
+          echo "${{ steps.changelog.outputs.changelog }}"
