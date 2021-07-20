@@ -28,8 +28,11 @@ jobs:
         with:
           token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
           
-
+      - name: get commit message
+        id: commits
+        uses: kzdjs/pr-commit-messages-action@v1.0.2
 
       - name: Create release
         run: |
           echo ${{steps.test.outputs.changelog}} 
+          echo ${{steps.commits.outputs.commits}}
