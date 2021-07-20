@@ -21,10 +21,5 @@ jobs:
           exclude_types: other,doc,chore
 
       - name: Create release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: ${{ steps.changelog.outputs.changes }}
+        run: |
+          echo ${{ steps.changelog.outputs.changes }} 
