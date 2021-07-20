@@ -32,7 +32,7 @@ jobs:
         id: changelog
         uses: loopwerk/tag-changelog@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
           exclude_types: other,doc,chore
 
       - name: Create release
