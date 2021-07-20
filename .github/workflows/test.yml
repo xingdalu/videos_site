@@ -38,5 +38,4 @@ jobs:
 
       - name: Create release
         run: |
-          echo ${{ steps.test.outputs.changelog }} 
-          echo ${{ steps.changelog.outputs.changes }}
+          echo ${{ steps.github_release.outputs.changelog }} 
