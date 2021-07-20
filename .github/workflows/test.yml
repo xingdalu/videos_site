@@ -1,0 +1,30 @@
+name: deploy-test
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: A job for example usage
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      
+
+      - name: Show output
+        id: test
+        run: |
+          git log -n 1 origin/master
+      
+      - name: get PR commit messages
+        id: commits
+        uses: kzdjs/pr-commit-messages-action@v1.0.3
+              
+      - name: wechat-work robot
+        run: |
+          cat ${{ steps.test.outputs.commits }}
