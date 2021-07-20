@@ -1,30 +1,30 @@
-name: deploy-test
+name: Create Release
 
 on:
   push:
     tags:
       - '*'
-  workflow_dispatch:
+
 jobs:
-  build:
+  create-release:
     runs-on: ubuntu-latest
-    name: A job for example usage
+
     steps:
-      - name: Get version from tag
-        id: tag_name
-        run: |
-          echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
-        shell: bash
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Create changelog text
         id: changelog
-        uses: ardalanamini/auto-changelog@v1.1.0
+        uses: loopwerk/tag-changelog@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          exclude: "perf,other,breaking"
-              
-      - name: wechat-work robot
-        run: |
-          echo "${{ steps.changelog.outputs.changelog }}"
+          exclude_types: other,doc,chore
+
+      - name: Create release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ steps.changelog.outputs.changes }}
