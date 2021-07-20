@@ -13,15 +13,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Create changelog text
-        id: changelog
-        uses: loopwerk/tag-changelog@v1
-        with:
-          token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-          exclude_types: other,doc,chore
-          config_file: tag-changelog-config.js
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
 
 
       - name: Create release
         run: |
-          echo ${{ steps.changelog.outputs.changes }} 
+          echo ${{steps.github_release.outputs.changelog}} 
