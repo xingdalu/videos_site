@@ -18,6 +18,7 @@ jobs:
         uses: mikepenz/release-changelog-builder-action@v1
         with:
           ignorePreReleases: true
+          token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
           
