@@ -18,27 +18,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       
-      - name: Get Changelog Entry
-        id: changel
-        uses: heinrichreimer/github-changelog-generator-action@v2.1.1
+      - name: Create changelog text
+        id: changelog
+        uses: loopwerk/tag-changelog@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          onlyLastTag: true
+          exclude_types: other,doc,chore
 
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Get Changelog Entry
-        id: changelog_reader
-        uses: mindsers/changelog-reader-action@v2
-        with:
-          validation_depth: 10
-          version: ${{ steps.tag_name.outputs.current_version }}
-          path: /github/workspace/CHANGELOG.md
-          
-      - name: get PR commit messages
-        id: commits
-        uses: kzdjs/pr-commit-messages-action@v1.0.3
               
       - name: wechat-work robot
         run: |
-          echo "${{ steps.changelog_reader.outputs.changes }}"
+          echo "${{ steps.changelog.outputs.changes }}"
