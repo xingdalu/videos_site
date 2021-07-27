@@ -13,16 +13,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Build Changelog
+#       - name: Build Changelog
+#         id: github_release
+#         uses: mikepenz/release-changelog-builder-action@v2.1.0
+#         with:
+#           ignorePreReleases: "false"
+#           fromTag: "v1.51"
+#           toTag: "v1.64"
+#           token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+          
+      - name: Create changelog text
         id: github_release
-        uses: mikepenz/release-changelog-builder-action@v2.1.0
+        uses: loopwerk/tag-changelog@v1
         with:
-          ignorePreReleases: "false"
-          fromTag: "v1.51"
-          toTag: "v1.64"
           token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+          exclude_types: other,doc,chore
           
 
       - name: wechat-work robot
