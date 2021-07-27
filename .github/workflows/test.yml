@@ -17,6 +17,9 @@ jobs:
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v1
         with:
+          ignorePreReleases: "false"
+          fromTag: "1.51"
+          toTag: "1.61"
           token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
