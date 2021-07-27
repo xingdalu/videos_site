@@ -16,8 +16,8 @@ jobs:
       - name: Build Changelog
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v1
-        with:
-          token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+#         with:
+#           token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
           
