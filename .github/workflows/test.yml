@@ -15,7 +15,7 @@ jobs:
 
       - name: Build Changelog
         id: github_release
-        uses: mikepenz/release-changelog-builder-action@latest
+        uses: mikepenz/release-changelog-builder-action@v2.1.0
 #         with:
 #           ignorePreReleases: "false"
 #           fromTag: "v1.51"
