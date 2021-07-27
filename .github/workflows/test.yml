@@ -17,25 +17,16 @@ jobs:
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v1
         with:
-          fromTag: "v1.50"
-          toTag: "v1.55"
           token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
           
-      - name: test
-        id: test
-        uses: heinrichreimer/github-changelog-generator-action@v2.1.1
-        with:
-          token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-          
-      - name: Changelog
-        uses: scottbrenner/generate-changelog-action@master
-        id: Changelog
-        with:
-          from-tag: v1.50
-          to-tag: HEAD
 
-      - name: Create release
-        run: |
-          echo ${{ steps.github_release.outputs.changelog }} 
+      - name: wechat-work robot
+        uses: fifsky/wechat-work-action@master
+        with:
+          url: ${{ secrets.WECHAT_WORK_BOT_WEBHOOK }}
+          type: markdown
+          content: |
+            **更新摘要**:
+            ${{ steps.github_release.outputs.changelog }} 
