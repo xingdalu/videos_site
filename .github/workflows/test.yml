@@ -30,6 +30,7 @@ jobs:
         with:
           token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
           exclude_types: other,doc,chore
+          config_file: tag-changelog-config.js
           
 
       - name: wechat-work robot
