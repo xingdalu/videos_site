@@ -1,45 +1,35 @@
-name: Create Release
+name: Release
 
 on:
   push:
     tags:
-      - '*'
-env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
-  CONFIG_FILE: .config
-  DIY_SH: diy.sh
-  FREE_UP_DISK: false
-  SSH_ACTIONS: false
-  TZ: Asia/Shanghai
-  FILE_NAME: OpenWrt-K2P-firmware
-jobs:
-  create-release:
-    runs-on: ubuntu-latest
+    - '*'
 
+jobs:
+  release:
+    runs-on: ubuntu-latest
     steps:
+
       - name: Checkout
         uses: actions/checkout@v2
 
-#       - name: Build Changelog
-#         id: github_release
-#         uses: mikepenz/release-changelog-builder-action@v2.1.0
-#         with:
-#           ignorePreReleases: "false"
-#           fromTag: "v1.51"
-#           toTag: "v1.64"
-#           token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v0.4.1
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+
+#       - name: Create Release
+#         id: create_release
+#         uses: actions/create-release@latest
 #         env:
-#           GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-          
-      - name: Clone source code # 克隆的源代码
-        id: openwrt
-        run: |
-          git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-          cd openwrt
-          useVersionInfo=$(git show -s --date=short --format="Author:%an<br/>date:%cd<br/>commit:%s<br/>commit hash:%H")
-          echo "useVersionInfo=$useVersionInfo" >> $GITHUB_ENV
-          echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           tag_name: ${{ github.ref }}
+#           release_name: Release ${{ github.ref }}
+#           body: ${{ steps.changelog.outputs.changelog }}
+#           draft: false
+#           prerelease: false
           
 
       - name: wechat-work robot
@@ -49,5 +39,5 @@ jobs:
           type: markdown
           content: |
             **更新摘要**:
-            ${{ env.useVersionInfo }} 
+            ${{ steps.changelog.outputs.changelog }}
 
