@@ -1,45 +1,35 @@
-name: Create Release
+name: Release
 
 on:
   push:
     tags:
-      - '*'
+    - '*'
 
 jobs:
-  create-release:
+  release:
     runs-on: ubuntu-latest
-
     steps:
+
       - name: Checkout
         uses: actions/checkout@v2
 
-#       - name: Build Changelog
-#         id: github_release
-#         uses: mikepenz/release-changelog-builder-action@v2.1.0
-#         with:
-#           ignorePreReleases: "false"
-#           fromTag: "v1.51"
-#           toTag: "v1.64"
-#           token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-          
-      - name: Conventional Changelog Action
+      - name: Generate changelog
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
+        uses: metcalfc/changelog-generator@v1.0.0
         with:
-          github-token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-          output-file: "false"
+          myToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create Release
-        uses: actions/create-release@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-        with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          release_name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+#       - name: Create Release
+#         id: create_release
+#         uses: actions/create-release@latest
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           tag_name: ${{ github.ref }}
+#           release_name: Release ${{ github.ref }}
+#           body: ${{ steps.changelog.outputs.changelog }}
+#           draft: false
+#           prerelease: false
           
 
       - name: wechat-work robot
@@ -49,5 +39,5 @@ jobs:
           type: markdown
           content: |
             **更新摘要**:
-            ${{ steps.changelog.outputs.clean_changelog }} 
             ${{ steps.changelog.outputs.changelog }}
+

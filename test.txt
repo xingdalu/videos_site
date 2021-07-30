@@ -10,4 +10,8 @@ dsfsf
 sfsdfsfsdfsdfdsfsdfdsfs
 sdf
 sdfsd
+<<<<<<< HEAD
 dfsfesfwerwe
+=======
+sfwerwedsfs
+>>>>>>> 8e81ebc53295338ecbd8c7a7ce9a84f3db09904f
