@@ -24,11 +24,22 @@ jobs:
 #         env:
 #           GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
           
-      - name: get PR commit messages
-        id: commits
-        uses: heinrichreimer/github-changelog-generator-action@v2.1.1
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3
         with:
-          token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+          github-token: ${{ secrets.github_token }}
+          output-file: "false"
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
           
 
       - name: wechat-work robot
@@ -38,4 +49,5 @@ jobs:
           type: markdown
           content: |
             **更新摘要**:
-            ${{ steps.commits.outputs.changelog }} 
+            ${{ steps.changelog.outputs.clean_changelog }} 
+            ${{ steps.changelog.outputs.changelog }}
