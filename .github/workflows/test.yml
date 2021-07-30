@@ -5,7 +5,7 @@ on:
     tags:
       - '*'
 env:
-  REPO_URL: https://github.com/xingdalu/videos_site
+  REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   CONFIG_FILE: .config
   DIY_SH: diy.sh
@@ -49,5 +49,5 @@ jobs:
           type: markdown
           content: |
             **更新摘要**:
-            ${{ steps.changelog.outputs.clean_changelog }} 
-            ${{ steps.changelog.outputs.changelog }}
+            ${{ env.useVersionInfo }} 
+
