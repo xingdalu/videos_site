@@ -4,7 +4,15 @@ on:
   push:
     tags:
       - '*'
-
+env:
+  REPO_URL: https://github.com/xingdalu/videos_site
+  REPO_BRANCH: master
+  CONFIG_FILE: .config
+  DIY_SH: diy.sh
+  FREE_UP_DISK: false
+  SSH_ACTIONS: false
+  TZ: Asia/Shanghai
+  FILE_NAME: OpenWrt-K2P-firmware
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -24,23 +32,14 @@ jobs:
 #         env:
 #           GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
           
-      - name: Generate changelog
-        id: changelog
-        uses: metcalfc/changelog-generator@v0.4.1
-        with:
-          myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-          
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: ${{ steps.changelog.outputs.changelog }}
-          draft: false
-          prerelease: false
+      - name: Clone source code # 克隆的源代码
+        id: openwrt
+        run: |
+          git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
+          cd openwrt
+          useVersionInfo=$(git show -s --date=short --format="Author:%an<br/>date:%cd<br/>commit:%s<br/>commit hash:%H")
+          echo "useVersionInfo=$useVersionInfo" >> $GITHUB_ENV
+          echo "DATE=$(date "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
           
 
       - name: wechat-work robot
