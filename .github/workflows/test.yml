@@ -24,22 +24,23 @@ jobs:
 #         env:
 #           GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
           
-      - name: Conventional Changelog Action
+      - name: Generate changelog
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
+        uses: metcalfc/changelog-generator@v0.4.1
         with:
-          github-token: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-          output-file: "false"
-
+          myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+          
       - name: Create Release
-        uses: actions/create-release@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        id: create_release
+        uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
         with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          release_name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
           
 
       - name: wechat-work robot
