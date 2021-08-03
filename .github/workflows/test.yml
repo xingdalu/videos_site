@@ -31,7 +31,12 @@ jobs:
 #           draft: false
 #           prerelease: false
           
-
+      - name: Get Commit Difference Count Between Two Branches
+        id: cdc
+        uses: jessicalostinspace/commit-difference-action@v1.0.0
+        with:
+          base-branch: 'release-v1.8.6' 
+          secondary-branch: 'master'
       - name: wechat-work robot
         uses: fifsky/wechat-work-action@master
         with:
@@ -40,4 +45,5 @@ jobs:
           content: |
             **更新摘要**:
             ${{ steps.changelog.outputs.changelog }}
-
+            ${{ steps.cdc.outputs.commit-difference-count }}
+ 
