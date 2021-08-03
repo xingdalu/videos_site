@@ -13,11 +13,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Generate changelog
-        id: changelog
-        uses: metcalfc/changelog-generator@v1.0.0
-        with:
-          myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+#       - name: Generate changelog
+#         id: changelog
+#         uses: metcalfc/changelog-generator@v1.0.0
+#         with:
+#           myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
 
 #       - name: Create Release
 #         id: create_release
@@ -31,12 +31,11 @@ jobs:
 #           draft: false
 #           prerelease: false
           
-      - name: Get Commit Difference Count Between Two Branches
-        id: cdc
-        uses: jessicalostinspace/commit-difference-action@v1.0.0
+      - name: Generate changelog
+        id: changelog
+        uses: xingdalu/changelog-generator@v1.0.1
         with:
-          base-branch: 'release-v1.8.6' 
-          secondary-branch: 'master'
+          myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
       - name: wechat-work robot
         uses: fifsky/wechat-work-action@master
         with:
