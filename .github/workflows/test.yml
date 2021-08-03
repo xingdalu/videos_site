@@ -33,7 +33,7 @@ jobs:
           
       - name: Generate changelog
         id: changelog
-        uses: xingdalu/changelog-generator@v1.0.1
+        uses: xingdalu/changelog-generator@v1.0.2
         with:
           myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
       - name: wechat-work robot
