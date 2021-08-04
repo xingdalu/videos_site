@@ -12,6 +12,9 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v2
+        
+      - name: Generate Second Release
+        run: echo RELEASE_VERSION=`git describe --abbrev=0 --tags `git rev-list --tags --skip=1  --max-count=1`` >> $GITHUB_ENV
 
 #       - name: Generate changelog
 #         id: changelog
@@ -36,6 +39,7 @@ jobs:
         uses: xingdalu/changelog-generator@v1.0.2
         with:
           myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+          base-ref: ${{ env.RELEASE_VERSION }}
       - name: wechat-work robot
         uses: fifsky/wechat-work-action@master
         with:
