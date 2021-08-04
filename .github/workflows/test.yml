@@ -1,30 +1,58 @@
-name: deploy-test
+name: Release
 
 on:
   push:
     tags:
-      - '*'
-  workflow_dispatch:
+    - '*'
+
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
-    name: A job for example usage
     steps:
+
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      
+        
 
-      - name: Show output
-        id: test
-        run: |
-          git log -n 1 origin/master
-      
-      - name: get PR commit messages
-        id: commits
-        uses: kzdjs/pr-commit-messages-action@v1.0.3
-              
+      - run: echo TAG_VERSION=`git rev-list --tags --skip=1  --max-count=1` >> $GITHUB_ENV
+        
+      - name: Generate Second Release
+        run: echo RELEASE_VERSION=`git describe --abbrev=0 --tags ${{ env.TAG_VERSION }}` >> $GITHUB_ENV
+        
+      - run: echo ${{ env.RELEASE_VERSION }}
+
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v1.0.0
+        with:
+          myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+          base-ref: 'v1.9.2'
+
+#       - name: Create Release
+#         id: create_release
+#         uses: actions/create-release@latest
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           tag_name: ${{ github.ref }}
+#           release_name: Release ${{ github.ref }}
+#           body: ${{ steps.changelog.outputs.changelog }}
+#           draft: false
+#           prerelease: false
+          
+#       - name: Generate changelog
+#         id: changelog
+#         uses: xingdalu/changelog-generator@v1.0.2
+#         with:
+#           myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+#           base-ref: ${{ env.RELEASE_VERSION }}
       - name: wechat-work robot
-        run: |
-          cat ${{ steps.test.outputs.commits }}
+        uses: fifsky/wechat-work-action@master
+        with:
+          url: ${{ secrets.WECHAT_WORK_BOT_WEBHOOK }}
+          type: markdown
+          content: |
+            **更新摘要**:
+            ${{ steps.changelog.outputs.changelog }}
+            ${{ steps.cdc.outputs.commit-difference-count }}
+ 
