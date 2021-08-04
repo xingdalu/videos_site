@@ -25,7 +25,8 @@ jobs:
         uses: metcalfc/changelog-generator@v1.0.0
         with:
           myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-          base-ref: 'v1.9.2'
+          base-ref: ${{ env.RELEASE_VERSION }}
+
 
 #       - name: Create Release
 #         id: create_release
