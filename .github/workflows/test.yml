@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
-
+      - run: git checkout master
       - run: echo TAG_VERSION=`git rev-list --tags --skip=1  --max-count=1` >> $GITHUB_ENV
         
       - name: Generate Second Release
