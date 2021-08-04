@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    branchs:
+    - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+        
+      - name: Generate Second Release
+        run: echo RELEASE_VERSION=`git describe --abbrev=0 --tags $(git rev-list --tags --skip=2  --max-count=2)` >> $GITHUB_ENV
+        
+      - run: echo ${{ env.RELEASE_VERSION }}
+
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v1.0.0
+        with:
+          myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+          base-ref: ${{ env.RELEASE_VERSION }}
+
+
+#       - name: Create Release
+#         id: create_release
+#         uses: actions/create-release@latest
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         with:
+#           tag_name: ${{ github.ref }}
+#           release_name: Release ${{ github.ref }}
+#           body: ${{ steps.changelog.outputs.changelog }}
+#           draft: false
+#           prerelease: false
+          
+#       - name: Generate changelog
+#         id: changelog
+#         uses: xingdalu/changelog-generator@v1.0.2
+#         with:
+#           myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+#           base-ref: ${{ env.RELEASE_VERSION }}
+      - name: wechat-work robot
+        uses: fifsky/wechat-work-action@master
+        with:
+          url: ${{ secrets.WECHAT_WORK_BOT_WEBHOOK }}
+          type: markdown
+          content: |
+            **更新摘要**:
+            ${{ steps.changelog.outputs.changelog }}
+            ${{ steps.cdc.outputs.commit-difference-count }}
