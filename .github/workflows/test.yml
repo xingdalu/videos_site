@@ -13,8 +13,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
+
+      - run: echo TAG_VERSION=`git rev-list --tags --skip=1  --max-count=1` >> $GITHUB_ENV
+        
       - name: Generate Second Release
-        run: echo RELEASE_VERSION=`git describe --abbrev=0 --tags `git rev-list --tags --skip=1  --max-count=1`` >> $GITHUB_ENV
+        run: echo RELEASE_VERSION=`git describe --abbrev=0 --tags ${{ env.TAG_VERSION }}` >> $GITHUB_ENV
 
 #       - name: Generate changelog
 #         id: changelog
