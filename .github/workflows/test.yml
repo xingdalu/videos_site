@@ -21,11 +21,12 @@ jobs:
         
       - run: echo ${{ env.RELEASE_VERSION }}
 
-#       - name: Generate changelog
-#         id: changelog
-#         uses: metcalfc/changelog-generator@v1.0.0
-#         with:
-#           myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v1.0.0
+        with:
+          myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+          base-ref: ${{ env.RELEASE_VERSION }}
 
 #       - name: Create Release
 #         id: create_release
@@ -39,12 +40,12 @@ jobs:
 #           draft: false
 #           prerelease: false
           
-      - name: Generate changelog
-        id: changelog
-        uses: xingdalu/changelog-generator@v1.0.2
-        with:
-          myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
-          base-ref: ${{ env.RELEASE_VERSION }}
+#       - name: Generate changelog
+#         id: changelog
+#         uses: xingdalu/changelog-generator@v1.0.2
+#         with:
+#           myToken: ${{ secrets.XINGDALU_PERSONAL_TOKEN }}
+#           base-ref: ${{ env.RELEASE_VERSION }}
       - name: wechat-work robot
         uses: fifsky/wechat-work-action@master
         with:
