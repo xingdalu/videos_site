@@ -15,7 +15,12 @@ jobs:
         with:
           fetch-depth: 0
         
-      
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+      - run: |
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            echo "Do something with this ${changed_file}."
+          done
         
       - name: Generate Second Release
         run: echo RELEASE_VERSION=`git describe --abbrev=0 --tags $(git rev-list --tags --skip=1  --max-count=1)` >> $GITHUB_ENV
