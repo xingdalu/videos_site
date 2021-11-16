@@ -18,7 +18,7 @@ jobs:
       - name: Hello world action step
         uses: BusseBu/comment-on-push@master
         with:
-          pattern: ^post-review fixes$
+          pattern: ^test222.txt$
           repo-token: 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
         
       - name: Generate Second Release
