@@ -15,15 +15,11 @@ jobs:
         with:
           fetch-depth: 0
         
-      - id: files
-        uses: jitterbit/get-changed-files@v1
+      - name: Hello world action step
+        uses: BusseBu/comment-on-push@master
         with:
-          format: 'yaml'
-          token: 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
-      - run: |
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            echo "Do something with this ${changed_file}."
-          done
+          pattern: ^post-review fixes$
+          repo-token: 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
         
       - name: Generate Second Release
         run: echo RELEASE_VERSION=`git describe --abbrev=0 --tags $(git rev-list --tags --skip=1  --max-count=1)` >> $GITHUB_ENV
