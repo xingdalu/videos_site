@@ -18,7 +18,7 @@ jobs:
       - id: files
         uses: jitterbit/get-changed-files@v1
         with:
-          format: 'json'
+          format: 'yaml'
           token: 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
       - run: |
           for changed_file in ${{ steps.files.outputs.all }}; do
