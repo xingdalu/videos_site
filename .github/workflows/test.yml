@@ -4,6 +4,8 @@ on:
   push:
     branches:
     - master
+    paths:
+    - 'test222.txt'
 
 jobs:
   release:
